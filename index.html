@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+
+            </nav>
+            <img src="music/image.jpeg" alt="" class="song-img">
+            <h1>Ishq Jalakar</h1>
+            <p>By Shashwat Sachdev</p>
+
+            <audio id="song">
+                <source src="music/music.mpeg" type="audio/mpeg">
+            </audio>
+            <input type="range" value="0" id="progress" title="Song progress"> </input>
+
+            <div class="controls">
+                <div>
+                    <i class="fa-solid fa-backward"></i>
+                </div>
+                <div>
+                    <i onclick="PlayPause()" class="fa-solid fa-play" id="ctrlIcon"></i>
+                </div>
+                <div>
+                    <i class="fa-solid fa-forward"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let progress = document.getElementById("progress");
+        let song = document.getElementById("song");
+        let ctrlIcon = document.getElementById("ctrlIcon");
+        song.onloadedmetadata = function () {
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+        function PlayPause() {
+            if (ctrlIcon.classList.contains("fa-pause")) {
+                song.pause();
+                ctrlIcon.classList.remove("fa-pause");
+                ctrlIcon.classList.add("fa-play");
+            }
+            else {
+                song.play();
+                ctrlIcon.classList.add("fa-pause");
+                ctrlIcon.classList.remove("fa-play");
+
+            }
+        }
+
+        if (song.play()) {
+            setInterval(() => {
+                progress.value = song.currentTime
+            }, 500)
+        }
+
+        progress.onchange = function () {
+            song.play();
+            song.currentTime = progress.value;
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+        }
+
+
+    </script>
+</body>
+
+</html>
